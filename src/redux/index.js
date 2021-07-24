@@ -5,6 +5,7 @@ import authReducer from './reducers/AuthReducers/authReducer'
 import errorReducer from './reducers/MessageOrErrorReducers/errorReducer'
 import profileReducer from './reducers/ProfileReducers/profileReducer'
 import messageInfoReducer from './reducers/MessageOrErrorReducers/messageInfoReducer'
+import favoriteReducer from './reducers/FavoriteReducers/favoriteReducer'
 
 const rootReducers = combineReducers({
     foods: foodReducer,
@@ -12,7 +13,8 @@ const rootReducers = combineReducers({
     auth: authReducer,
     error: errorReducer,
     profile: profileReducer,
-    messageInfo: messageInfoReducer
+    messageInfo: messageInfoReducer,
+    favorite: favoriteReducer
 })
 
 export default rootReducers

@@ -1,14 +1,30 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { displayFoodCategory, displayAvailability } from '../../helper'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCartPlus, faHeart } from '@fortawesome/free-solid-svg-icons'
+import { faCartPlus, faHeart, faHeartBroken } from '@fortawesome/free-solid-svg-icons'
+import { useDispatch } from 'react-redux'
+import { addToFavorites, removeFavoriteFood } from '../../redux/actions/FavoriteAction/favoriteAction'
+import { clearSpecificFoodInfo } from '../../redux/actions/FoodAction/foodAction'
+
 
 export default function SingleFoodInfoStore(foodInfo) {
 
-    const { id, foodSKU, foodImage, foodCategory, foodName, foodPrice, foodDescription, isAvailable } = foodInfo.foodInfo
+    const { id, foodSKU, foodImage, foodCategory, foodName, foodPrice, foodDescription, isAvailable, isFavorite } = foodInfo.foodInfo
+
+    const dispatch = useDispatch()
+
+    const addFoodToFavorites = () => {
+        
+    }
+    useEffect(() => {
+
+        return function cleaup() {
+            dispatch(clearSpecificFoodInfo())
+        }
+    }, [dispatch])
 
     const displayLoadingIfDataIsUnavailable = (foodInfo) => {
-        if (foodInfo) {
+        if (foodInfo.foodInfo.id) {
             return (
                 <div className="container mt-4">
                     <div className="row mt-3 mb-3">
@@ -33,7 +49,10 @@ export default function SingleFoodInfoStore(foodInfo) {
                                         <button className="btn btn-outline-primary"> <FontAwesomeIcon icon={faCartPlus} /> Add To Cart </button>
                                     </div>
                                     <div className="col col-sm-6 col-lg-3">
-                                        <button className="btn btn-outline-danger"> <FontAwesomeIcon icon={faHeart} /> Add To Favorites </button>
+                                    <button className="btn btn-outline-danger" onClick={() => isFavorite === true ? removeFavoriteFood() : addToFavorites()}> 
+                                            <FontAwesomeIcon icon={isFavorite === true ? faHeartBroken : faHeart} /> 
+                                                {isFavorite === true ? " Remove from Favorites" : " Add to Favorites"} 
+                                    </button>
                                     </div>
                                     <div className="col col-sm-12 col-lg-6">
                                         { id }
