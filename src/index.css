@@ -43,3 +43,24 @@ code {
 Link {
   text-decoration: none;
 }
+
+.spinner {
+  animation: spin infinite 2s linear;
+
+  /*You can increase or decrease the timer (5s) to 
+   increase or decrease the speed of the spinner*/
+}
+
+.loading-bar {
+  background-color: blanchedalmond;
+  
+}
+
+@keyframes spin {
+from {
+  transform: rotate(0deg);
+}
+to {
+  transform: rotate(360deg);
+}
+}

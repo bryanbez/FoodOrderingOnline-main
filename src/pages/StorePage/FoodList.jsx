@@ -5,6 +5,7 @@ import  { readFoodInfo } from '../../redux/actions/FoodAction/foodAction'
 import { useDispatch, useSelector } from 'react-redux';
 import SearchFood from '../../components/Food/SearchFood';
 import SortFood from '../../components/Food/SortFood';
+import LoadingCircle from '../../components/Loading/LoadingCircle';
 
 export default function FoodList() {
 
@@ -20,7 +21,17 @@ export default function FoodList() {
            }, 3000)
     }, [dispatch, fetchFoodList, lengthOfFoodList])
 
-    const loopFoodList = fetchFoodList.map(food => <FoodCard key={food.id} foodList={food}></FoodCard>)
+    const loopFoodList = () => {
+        if (fetchFoodList.foodList) {
+            return fetchFoodList.foodList.map(food => <FoodCard key={food.id} foodList={food}></FoodCard>)
+        }
+        else {
+            return (
+                <LoadingCircle></LoadingCircle>
+            )
+        }
+        
+    }
 
     const showLoading = () => {
         return (
@@ -38,12 +49,12 @@ export default function FoodList() {
                 </div>
                 <div className="row">
                     <div className="col col-lg-12">
-                            <SortFood></SortFood>
+                            <SortFood sortBy={fetchFoodList.sortBy}></SortFood>
                     </div>
                 </div>
 
                 <div className="row">
-                    { loopFoodList }
+                    { loopFoodList() }
                 </div>
             </div>
         )

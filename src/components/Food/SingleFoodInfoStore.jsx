@@ -1,21 +1,18 @@
 import React, { useEffect } from 'react'
-import { displayFoodCategory, displayAvailability } from '../../helper'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCartPlus, faHeart, faHeartBroken } from '@fortawesome/free-solid-svg-icons'
+import { faCartPlus } from '@fortawesome/free-solid-svg-icons'
 import { useDispatch } from 'react-redux'
-import { addToFavorites, removeFavoriteFood } from '../../redux/actions/FavoriteAction/favoriteAction'
 import { clearSpecificFoodInfo } from '../../redux/actions/FoodAction/foodAction'
-
+import FavoriteBtn from '../Favorites/FavoriteBtn'
+import LoadingCircle from '../Loading/LoadingCircle'
+import { Link } from 'react-router-dom'
 
 export default function SingleFoodInfoStore(foodInfo) {
 
-    const { id, foodSKU, foodImage, foodCategory, foodName, foodPrice, foodDescription, isAvailable, isFavorite } = foodInfo.foodInfo
+    const { id, foodImage, foodCategory, foodName, foodPrice, foodDescription, isAvailable} = foodInfo.foodInfo
 
     const dispatch = useDispatch()
 
-    const addFoodToFavorites = () => {
-        
-    }
     useEffect(() => {
 
         return function cleaup() {
@@ -45,18 +42,16 @@ export default function SingleFoodInfoStore(foodInfo) {
                                 <h1 className="card-title"> &#8369; { foodPrice } </h1>
                                 <hr />
                                 <div className="row">
-                                    <div className="col col-sm-6 col-lg-3">
+                                    <div className="col col-sm-12 col-lg-4 d-flex justify-content-center mb-2">
                                         <button className="btn btn-outline-primary"> <FontAwesomeIcon icon={faCartPlus} /> Add To Cart </button>
                                     </div>
-                                    <div className="col col-sm-6 col-lg-3">
-                                    <button className="btn btn-outline-danger" onClick={() => isFavorite === true ? removeFavoriteFood() : addToFavorites()}> 
-                                            <FontAwesomeIcon icon={isFavorite === true ? faHeartBroken : faHeart} /> 
-                                                {isFavorite === true ? " Remove from Favorites" : " Add to Favorites"} 
-                                    </button>
+                                    <div className="col col-sm-12 col-lg-4 d-flex justify-content-center mb-2">
+                                        <FavoriteBtn foodId={id}></FavoriteBtn>
                                     </div>
-                                    <div className="col col-sm-12 col-lg-6">
-                                        { id }
+                                    <div className="col col-sm-12 col-lg-4 d-flex justify-content-center mb-2">
+                                        <Link className="btn btn-outline-secondary" to="/store/list"> Back </Link>
                                     </div>
+                                  
                                 </div>
                             </div>
                         </div>
@@ -100,11 +95,7 @@ export default function SingleFoodInfoStore(foodInfo) {
         }
         else {
            return (
-               <div className="container">
-                   <div className="row">
-                       <h1> Loading ... </h1>
-                   </div>
-               </div>
+               <LoadingCircle></LoadingCircle>
            )
         }
     }

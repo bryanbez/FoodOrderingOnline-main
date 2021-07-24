@@ -31,7 +31,7 @@ export const readFoodInfo = (sortBy = 'all') => {
                     })
                 })     
                 Promise.all(fetchFoodWithSort).then(value => {
-                    dispatch({ type: ActionTypes.READ_FOOD, payload: value }) 
+                    dispatch({ type: ActionTypes.READ_FOOD, payload: { "foodList": value, "sortBy": sortBy } }) 
                 });
             })
 
@@ -57,7 +57,7 @@ export const readFoodInfo = (sortBy = 'all') => {
                 })  
                 Promise.all(fetchAllFood).then(value => {
                    
-                     dispatch({ type: ActionTypes.READ_FOOD, payload: value }) 
+                     dispatch({ type: ActionTypes.READ_FOOD, payload: { "foodList": value, "sortBy": sortBy } }) 
                 });
               
             })
