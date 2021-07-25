@@ -1,5 +1,5 @@
 import { ActionTypes } from "../actionTypes";
-import { userFavoriteFoodDB } from '../../../firebase'
+import { userFavoriteFoodDB, foodDB, foodImageStorage } from '../../../firebase'
 
 export const addToFavorites = (foodAndUserId) => {
     return (dispatch) => {
@@ -14,11 +14,33 @@ export const addToFavorites = (foodAndUserId) => {
     }
 }
 
-export const fetchFavoriteFoods = () => {
-    return (dispatch) => {
-
+export const fetchFavoriteFoods = (userId) => {
+    return async (dispatch) => {
+        await userFavoriteFoodDB.where("user_id", "==", userId).onSnapshot(snapshot => {
+            const fetchFavoriteFoodList = snapshot.docs.map(async doc => {
+                    return await foodDB.doc(doc.data().food_id).get().then(docRef => {
+                        return foodImageStorage.child(docRef.data().foodImage).getDownloadURL().then(url => {
+                            return {
+                                'foodId': docRef.id,
+                                'foodSKU': docRef.data().foodSKU,
+                                'foodCategory': docRef.data().foodCategory,
+                                'foodImage': url,
+                                'foodName': docRef.data().foodName,
+                                'foodPrice': docRef.data().foodPrice,
+                                'foodDescription': docRef.data().foodDescription,
+                                'isAvailable': docRef.data().isAvailable
+                                }   
+                        })
+                    })
+            })
+            Promise.all(fetchFavoriteFoodList).then(value => {
+                return dispatch({ type: ActionTypes.FETCH_ALL_FAVORITE_FOODS, payload: value })
+            })
+        })
     }
 }
+//({ id: doc.id, ...doc.data() })
+//return dispatch({ type: ActionTypes.FETCH_ALL_FAVORITE_FOODS, payload: snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) })
 
 export const fetchSpecificFavoriteFood = (foodId) => {
     return (dispatch) => {

@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart, faHeartBroken } from '@fortawesome/free-solid-svg-icons'
 import { useSelector, useDispatch } from 'react-redux'
 import { addToFavorites, removeFavoriteFood, isFoodAlreadyFavorite } from '../../redux/actions/FavoriteAction/favoriteAction'
-import { fetchUserInfo } from '../../redux/actions/ProfileAction/profileAction'
  
 export default function FavoriteBtn(foodId) {
 
@@ -11,13 +10,10 @@ export default function FavoriteBtn(foodId) {
 
     const getProfileInfo = useSelector((state) => state.profile.profileInfo)
     const getIsFoodAlreadyFavorite = useSelector((state) => state.favorite.alreadyFavorite)
-    const getDisplayName = useSelector((state) => state.auth.display_name)
 
     useEffect(() => {
         dispatch(isFoodAlreadyFavorite(foodId.foodId))
-        dispatch(fetchUserInfo(getDisplayName))
-
-    }, [dispatch, foodId, getDisplayName])
+    }, [dispatch, foodId])
 
     const addToFoodFavorites = () => {
         dispatch(addToFavorites({

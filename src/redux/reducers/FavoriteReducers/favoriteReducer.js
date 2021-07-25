@@ -1,7 +1,8 @@
 import { ActionTypes } from "../../actions/actionTypes";
 
 const initialState = {
-    alreadyFavorite: false
+    alreadyFavorite: false,
+    favoriteFoodList: []
 }
 
 const favoriteReducer = (state = initialState, action) => {
@@ -10,6 +11,11 @@ const favoriteReducer = (state = initialState, action) => {
             return {
                 ...state,
                 alreadyFavorite: action.payload
+            }
+        case ActionTypes.FETCH_ALL_FAVORITE_FOODS: 
+            return {
+                ...state,
+                favoriteFoodList: action.payload
             }
         default:
             return state

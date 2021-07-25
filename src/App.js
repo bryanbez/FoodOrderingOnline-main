@@ -13,6 +13,7 @@ import Register from './pages/StorePage/Register.jsx'
 import LoginForm from './components/Authentication/LoginForm.jsx'
 import EditProfile from './components/Profile/EditProfile.jsx'
 import ViewFoodDetailsSKU from './components/Food/ViewFoodDetailsSKU.jsx'
+import Favorites from './pages/StorePage/Favorites.jsx'
 
 function App() {
   return (
@@ -35,6 +36,8 @@ function App() {
             {/* Authentication Page */}
             <Route path="/register" exact component={Register}></Route>
             <Route path="/login" exact component={LoginForm}></Route>
+            {/* Favorite Page */}
+            <Route path="/favorites" exact component={Favorites}></Route>
         </Switch>
       </div>
     </Router>

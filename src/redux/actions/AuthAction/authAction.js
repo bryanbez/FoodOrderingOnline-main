@@ -1,5 +1,6 @@
 import { appAuthentication, appAuthPersistent, profileDB } from "../../../firebase";
 import { ActionTypes } from "../actionTypes";
+import { fetchUserInfo } from "../ProfileAction/profileAction";
 
 export const registerUser = (userInfo) => {
     return async (dispatch) => {
@@ -64,6 +65,7 @@ export const refreshAuth = () => {
     return (dispatch) => {
         appAuthentication.onAuthStateChanged((user) => {
             dispatch({ type: ActionTypes.LOG_IN_USER, payload: user })
+            dispatch(fetchUserInfo(user.displayName))
         })
     }
 }
