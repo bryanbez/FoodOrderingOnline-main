@@ -43,11 +43,15 @@ export const loginUser = (loginCredentials) => {
     
     return (dispatch) => {
         appAuthPersistent.then(() => {
-            return appAuthentication.signInWithEmailAndPassword(loginCredentials.user_email, loginCredentials.user_password)
+            appAuthentication.signInWithEmailAndPassword(loginCredentials.user_email, loginCredentials.user_password)
+            .then(res => {
+                dispatch(fetchUserInfo(res.user.displayName))
+            })
         })
         .catch((error) => {
             dispatch({ type: ActionTypes.LOGIN_ERROR, payload: error.message })
         });
+        
     }
 }
 
@@ -61,11 +65,13 @@ export const logOutUser = () => {
     }
 }
 
-export const refreshAuth = () => {
+export const refreshAuth = (displayName) => {
     return (dispatch) => {
         appAuthentication.onAuthStateChanged((user) => {
             dispatch({ type: ActionTypes.LOG_IN_USER, payload: user })
-            dispatch(fetchUserInfo(user.displayName))
+            if (displayName) {
+                fetchUserInfo(displayName)
+            }
         })
     }
 }
