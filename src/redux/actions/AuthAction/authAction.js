@@ -68,10 +68,11 @@ export const logOutUser = () => {
 export const refreshAuth = (displayName) => {
     return (dispatch) => {
         appAuthentication.onAuthStateChanged((user) => {
-            dispatch({ type: ActionTypes.LOG_IN_USER, payload: user })
-            if (displayName) {
-                fetchUserInfo(displayName)
+            if (user) {
+                dispatch(fetchUserInfo(user.displayName))
+                dispatch({ type: ActionTypes.LOG_IN_USER, payload: user })
             }
+           
         })
     }
 }

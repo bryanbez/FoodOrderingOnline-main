@@ -6,18 +6,27 @@ import { useDispatch, useSelector } from 'react-redux';
 import { refreshAuth, logOutUser } from '../redux/actions/AuthAction/authAction';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCartPlus, faListAlt, faHeart } from '@fortawesome/free-solid-svg-icons'
+import { fetchAllCartInfo } from '../redux/actions/CartAction/cartAction';
 
 export default function Navbar() {
 
     const dispatch = useDispatch()
 
     const getDisplayName = useSelector((state) => state.auth.display_name)
+    const getProfileInfo = useSelector((state) => state.profile.profileInfo)
+    const getFoodsInCart = useSelector((state) => state.cart.user_all_items_in_cart).length
 
-    useEffect(() => {
+    useEffect(() => {  
         setTimeout(() => {
             dispatch(refreshAuth())
         }, 2000)
-    }, [dispatch, getDisplayName])
+    }, [dispatch])
+
+    useEffect(() => {
+        if (getProfileInfo.length !== 0) {
+            dispatch(fetchAllCartInfo(getProfileInfo.docId))
+        }
+    }, [getProfileInfo.length, getProfileInfo.docId, dispatch])
 
     const showLogInAndSignUp = () => {
         return (
@@ -84,7 +93,7 @@ export default function Navbar() {
                 </NavLink>
                     <NavLink to="/cart" activeClassName="activeNavbar">
                     <li className="nav-item">
-                        <span className="nav-link"> <FontAwesomeIcon icon={faCartPlus} /> Your Cart </span>
+                        <span className="nav-link position-relative"> <span className="position-absolute top-10 start-100 translate-middle badge rounded-pill bg-danger"> {getFoodsInCart }</span><FontAwesomeIcon icon={faCartPlus} /> Your Cart </span>
                     </li>
                 </NavLink>
             </>

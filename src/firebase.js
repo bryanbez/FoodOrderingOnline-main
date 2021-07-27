@@ -18,11 +18,13 @@ const registerConfig = firebase.initializeApp(config)
 const firestoreDB = registerConfig.firestore();
 const firebaseStorage = registerConfig.storage();
 
+export const firebaseAll = firebase
 export const foodDB = firestoreDB.collection("products")
 export const foodCategoryDB = firestoreDB.collection("food_category")
 export const archivedFood = firestoreDB.collection("archived_food")
 export const profileDB = firestoreDB.collection("profile")
 export const userFavoriteFoodDB = firestoreDB.collection("user_favorite_food")
+export const cartDB = firestoreDB.collection("cart")
 
 export const foodImageStorage = firebaseStorage.ref('food_images/')
 

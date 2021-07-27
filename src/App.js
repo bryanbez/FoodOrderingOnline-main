@@ -14,6 +14,7 @@ import LoginForm from './components/Authentication/LoginForm.jsx'
 import EditProfile from './components/Profile/EditProfile.jsx'
 import ViewFoodDetailsSKU from './components/Food/ViewFoodDetailsSKU.jsx'
 import Favorites from './pages/StorePage/Favorites.jsx'
+import Cart from './pages/StorePage/Cart.jsx'
 
 function App() {
   return (
@@ -38,6 +39,8 @@ function App() {
             <Route path="/login" exact component={LoginForm}></Route>
             {/* Favorite Page */}
             <Route path="/favorites" exact component={Favorites}></Route>
+            {/* Cart Page */}
+            <Route path="/cart" exact component={Cart}></Route>
         </Switch>
       </div>
     </Router>
