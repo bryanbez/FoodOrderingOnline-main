@@ -86,6 +86,25 @@ export const fetchSpecificFood = (docId) => {
     }
 }
 
+export const fetchSpecificFoodToDisplayInCart = (docId) => {
+    return (dispatch) => {
+        return foodDB.doc(docId).get().then(docRef => {
+            return foodImageStorage.child(docRef.data().foodImage).getDownloadURL()
+                .then(url => {
+                    return { 
+                            'foodSKU': docRef.data().foodSKU,
+                            'foodCategory': docRef.data().foodCategory,
+                            'foodImage': url,
+                            'foodName': docRef.data().foodName,
+                            'foodPrice': docRef.data().foodPrice,
+                            'foodDescription': docRef.data().foodDescription,
+                            'isAvailable': docRef.data().isAvailable
+                        }   
+                })
+        })
+    }
+}
+
 export const fetchSpecificFoodBySKU = (sku) => {
     return async (dispatch) => {
         await foodDB.where("foodSKU", "==", sku).get().then(doc => {

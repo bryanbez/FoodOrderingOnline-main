@@ -1,5 +1,6 @@
-import { cartDB, firebaseAll } from "../../../firebase";
+import { cartDB, firebaseAll, foodDB } from "../../../firebase";
 import { ActionTypes } from "../actionTypes";
+import { fetchSpecificFoodToDisplayInCart } from "../FoodAction/foodAction";
 import { singleInfo } from "../MessageOrErrorAction/infoAction";
 
 export const addToCartAction = (foodDetails) => {
@@ -7,9 +8,10 @@ export const addToCartAction = (foodDetails) => {
         const getData = await dispatch(checkIfFoodIdIsOnTheCartAlready(foodDetails.food_id))
         
         if (getData.length === 1) {
-            // update qty
+            // update qty and total price
             cartDB.doc(getData[0].docIdToUpdate).update({
-                "quantity": getData[0].quantity + 1
+                "quantity": getData[0].quantity + 1,
+                "totalPrice": parseFloat(getData[0].totalPrice) + parseFloat(getData[0].initialPrice),
             }).then(() => {
                 dispatch(singleInfo("Quantity Count Updated"))
             }).catch(err => {
@@ -23,7 +25,8 @@ export const addToCartAction = (foodDetails) => {
                     date: firebaseAll.firestore.Timestamp.fromDate(new Date()),
                     foodId: foodDetails.food_id,
                     quantity: 1,
-                    totalPrice: foodDetails.initial_price
+                    initialPrice: parseFloat(foodDetails.initial_price),
+                    totalPrice: parseFloat(foodDetails.initial_price)
                 }).then(() => {
                     dispatch(singleInfo("Added To Cart Successfully"))
                     dispatch(fetchAllCartInfo(foodDetails.user_id))
@@ -41,6 +44,8 @@ export const checkIfFoodIdIsOnTheCartAlready = (foodId) => {
             return querySnapshot.docs.map(doc => {
                 return {
                     "quantity": doc.data().quantity,
+                    "initialPrice": doc.data().initialPrice,
+                    "totalPrice": doc.data().totalPrice,
                     "size": querySnapshot.size,
                     "docIdToUpdate": doc.id
                 }
@@ -52,8 +57,9 @@ export const checkIfFoodIdIsOnTheCartAlready = (foodId) => {
 export const fetchAllCartInfo = (userID) => {
     return (dispatch) => {
         cartDB.where('user_id', '==', userID).get().then(querySnapshot => {
-            const fetchAllFoodsInCart = querySnapshot.docs.map(doc => {
-                return { "docId": doc.id, ...doc.data() }
+            const fetchAllFoodsInCart = querySnapshot.docs.map(async doc => {
+                const foodInfo = await dispatch(fetchSpecificFoodToDisplayInCart(doc.data().foodId))
+                    return { "docId": doc.id, "foodInfo": foodInfo, ...doc.data() }
             })
             Promise.all(fetchAllFoodsInCart).then(value => {
                 return dispatch({ type: ActionTypes.FETCH_CART_LIST, payload: value })
@@ -62,9 +68,16 @@ export const fetchAllCartInfo = (userID) => {
     }
 }
 
-export const editQuantityInCart = (cartId) => {
+export const updateQtyOfFoodItem = (cartInfoToUpdate) => {
     return (dispatch) => {
-
+            return cartDB.doc(cartInfoToUpdate.docId).update({
+                quantity: parseInt(cartInfoToUpdate.quantity),
+                totalPrice: parseInt(cartInfoToUpdate.quantity)  * cartInfoToUpdate.initialPrice
+            }).then(() => {
+                console.log("Quantity Updated")
+            }).catch(err => {
+                console.log(err)
+            })
     }
 }
 

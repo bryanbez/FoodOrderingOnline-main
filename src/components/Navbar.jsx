@@ -93,7 +93,7 @@ export default function Navbar() {
                 </NavLink>
                     <NavLink to="/cart" activeClassName="activeNavbar">
                     <li className="nav-item">
-                        <span className="nav-link position-relative"> <span className="position-absolute top-10 start-100 translate-middle badge rounded-pill bg-danger"> {getFoodsInCart }</span><FontAwesomeIcon icon={faCartPlus} /> Your Cart </span>
+                        <span className="nav-link position-relative"> <span hidden={getFoodsInCart === 0 ? true : false} className="position-absolute top-10 start-100 translate-middle badge rounded-pill bg-danger"> { getFoodsInCart }</span><FontAwesomeIcon icon={faCartPlus} /> Your Cart </span>
                     </li>
                 </NavLink>
             </>
