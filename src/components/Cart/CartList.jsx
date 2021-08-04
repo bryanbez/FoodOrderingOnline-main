@@ -18,10 +18,15 @@ export default function CartList() {
 
     const voucherInfo = useSelector((state) => state.voucher.voucherInfo)
 
+    const discount = useSelector((state) => state.voucher.discountPrice)
+
     const afterVoucherAppliedPrice = useSelector((state) => state.voucher.priceAfterVoucherApplied)
     
     useEffect(() => {
           dispatch(priceAfterVoucherApplied(subTotal, voucherInfo))
+          return function cleanup(){
+                dispatch(priceAfterVoucherApplied(subTotal, []))
+          }
     }, [voucherInfo, subTotal, dispatch])
 
     const displayOfItems = allFoodsInCart.map(food => {
@@ -53,13 +58,16 @@ export default function CartList() {
                     </li>
                     <li className="list-group-item">
                     <div className="row">
-                            <div className="col col-sm-6 col-lg-6">
+                            <div className="col col-sm-4 col-lg-3">
                                <h4> Voucher Code: </h4>
                             </div>
-                            <div className="col col-sm-6 col-lg-6">
+                            <div className="col col-sm-4 col-lg-7">
                                 <VoucherInput></VoucherInput>
                                 <br />
                                 <AlertWithCustomizedColor></AlertWithCustomizedColor>
+                            </div>
+                            <div className="col col-sm-4 col-lg-2">
+                               { discount === 0 ? '' : (<h4> - { discount } </h4>)}
                             </div>
                         </div>
                     </li>
@@ -75,10 +83,10 @@ export default function CartList() {
                     </li>
                     <li className="list-group-item">
                     <div className="row">
-                            <div className="col col-sm-6 col-lg-10">
+                            <div className="col col-sm-6 col-lg-9">
                                <h3> Total Price: </h3>
                             </div>
-                            <div className="col col-sm-6 col-lg-2">
+                            <div className="col col-sm-6 col-lg-3">
                                <h1> &#8369; {afterVoucherAppliedPrice} </h1>
                             </div>
                         </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchVoucherCode } from '../../redux/actions/VoucherAction/voucherAction'
 
@@ -10,6 +10,13 @@ export default function VoucherInput() {
         const { value } = e.target
         dispatch(fetchVoucherCode(value))
     }
+
+    useEffect(() => {
+        
+        return () => {
+            dispatch(fetchVoucherCode(''))
+        }
+    }, [dispatch])
 
     return (
         <div>
