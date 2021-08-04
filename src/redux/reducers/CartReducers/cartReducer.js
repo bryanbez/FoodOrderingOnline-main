@@ -3,7 +3,9 @@ import { ActionTypes } from "../../actions/actionTypes";
 const initialState = {
 
     user_all_items_in_cart: [],
-    single_item_in_cart: []   
+    single_item_in_cart: [],
+    sub_total: '',
+    total_price_to_pay: '' 
 }
 
 const CartReducer = (state = initialState, action) => {
@@ -12,6 +14,11 @@ const CartReducer = (state = initialState, action) => {
             return {
                 ...state,
                 user_all_items_in_cart: action.payload
+            }
+        case ActionTypes.FETCH_SUB_TOTAL: 
+            return {
+                ...state,
+                sub_total: action.payload
             }
         case ActionTypes.REMOVE_IN_CART:
             return state

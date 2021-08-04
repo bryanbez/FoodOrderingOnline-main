@@ -6,7 +6,8 @@ import errorReducer from './reducers/MessageOrErrorReducers/errorReducer'
 import profileReducer from './reducers/ProfileReducers/profileReducer'
 import messageInfoReducer from './reducers/MessageOrErrorReducers/messageInfoReducer'
 import favoriteReducer from './reducers/FavoriteReducers/favoriteReducer'
-import cartReducer, { CartReducer } from './reducers/CartReducers/cartReducer'
+import cartReducer from './reducers/CartReducers/cartReducer'
+import voucherReducer from './reducers/VoucherReducers/voucherReducer'
 
 const rootReducers = combineReducers({
     foods: foodReducer,
@@ -16,7 +17,8 @@ const rootReducers = combineReducers({
     profile: profileReducer,
     messageInfo: messageInfoReducer,
     favorite: favoriteReducer,
-    cart: cartReducer
+    cart: cartReducer,
+    voucher: voucherReducer,
 })
 
 export default rootReducers

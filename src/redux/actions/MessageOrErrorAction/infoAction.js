@@ -13,3 +13,14 @@ export const singleInfo = (infoMsg) => {
         payload: infoMsg
     }
 }
+
+export const singleMessageCustomizedColor = (infoMsg, color) => {
+    return {
+        type: ActionTypes.SINGLE_INFO_WITH_CUSTOMIZED_COLOR,
+        payload: {
+            "message": infoMsg,
+            "color": color
+
+         }
+    }
+}

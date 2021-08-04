@@ -62,9 +62,20 @@ export const fetchAllCartInfo = (userID) => {
                     return { "docId": doc.id, "foodInfo": foodInfo, ...doc.data() }
             })
             Promise.all(fetchAllFoodsInCart).then(value => {
+                dispatch(getTotalPriceToPay(value))
                 return dispatch({ type: ActionTypes.FETCH_CART_LIST, payload: value })
             }) 
         })
+    }
+}
+
+export const getTotalPriceToPay = (arrayOfPrice) => {
+    return (dispatch) => {
+        let allTotalPrice = []
+        arrayOfPrice.forEach(element => {
+            allTotalPrice.push(element.totalPrice)
+        });
+        return dispatch({ type: ActionTypes.FETCH_SUB_TOTAL, payload: allTotalPrice.reduce((a, b) => a + b, 0) })
     }
 }
 
