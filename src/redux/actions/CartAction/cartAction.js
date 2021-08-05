@@ -92,6 +92,13 @@ export const updateQtyOfFoodItem = (cartInfoToUpdate) => {
     }
 }
 
+export const passTotalPriceToPay = (initialPrice, courierPrice) => {
+    return {
+        type: ActionTypes.FETCH_TOTAL_PRICE,
+        payload: (initialPrice + courierPrice)
+    }
+}
+
 export const removeItemInCart = (cartId) => {
     return (dispatch) => {
 

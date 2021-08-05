@@ -8,6 +8,8 @@ import messageInfoReducer from './reducers/MessageOrErrorReducers/messageInfoRed
 import favoriteReducer from './reducers/FavoriteReducers/favoriteReducer'
 import cartReducer from './reducers/CartReducers/cartReducer'
 import voucherReducer from './reducers/VoucherReducers/voucherReducer'
+import courierReducer from './reducers/CourierReducers/courierReducer'
+
 
 const rootReducers = combineReducers({
     foods: foodReducer,
@@ -19,6 +21,7 @@ const rootReducers = combineReducers({
     favorite: favoriteReducer,
     cart: cartReducer,
     voucher: voucherReducer,
+    courier: courierReducer
 })
 
 export default rootReducers

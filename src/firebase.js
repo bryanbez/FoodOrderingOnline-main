@@ -26,6 +26,7 @@ export const profileDB = firestoreDB.collection("profile")
 export const userFavoriteFoodDB = firestoreDB.collection("user_favorite_food")
 export const cartDB = firestoreDB.collection("cart")
 export const voucherDB = firestoreDB.collection("voucher")
+export const courierDB = firestoreDB.collection("courier")
 
 export const foodImageStorage = firebaseStorage.ref('food_images/')
 

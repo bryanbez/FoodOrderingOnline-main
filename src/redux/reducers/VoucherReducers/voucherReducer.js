@@ -3,7 +3,7 @@ import { ActionTypes } from "../../actions/actionTypes";
 const initialState = {
 
     voucherInfo: [],
-    priceAfterVoucherApplied: '',
+    priceAfterVoucherApplied: 0,
     discountPrice: ''
 
 }
@@ -18,7 +18,7 @@ const voucherReducer = (state = initialState, action) => {
         case ActionTypes.PRICE_AFTER_APPLYING_VOUCHER: 
             return {
                 ...state,
-                priceAfterVoucherApplied: action.payload.totalPrice,
+                priceAfterVoucherApplied: action.payload.initialPrice,
                 discountPrice: action.payload.discount
             }
         default:

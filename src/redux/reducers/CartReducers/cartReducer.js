@@ -20,6 +20,11 @@ const CartReducer = (state = initialState, action) => {
                 ...state,
                 sub_total: action.payload
             }
+        case ActionTypes.FETCH_TOTAL_PRICE: 
+            return {
+                ...state,
+                total_price_to_pay: action.payload
+            }
         case ActionTypes.REMOVE_IN_CART:
             return state
         case ActionTypes.EDIT_QUANTITY_IN_ITEM:

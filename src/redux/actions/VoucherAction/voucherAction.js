@@ -18,25 +18,26 @@ export const fetchVoucherCode = (code) => {
 }
 
 export const priceAfterVoucherApplied = (subtotal, voucherInfo) => {
+    console.log(voucherInfo)
     return (dispatch) => {
         if (voucherInfo.length === 1) {
             if (voucherInfo[0].isFixedOrPercentage === 'percentage') {
                 if (subtotal < voucherInfo[0].min_spend) {
                     dispatch(singleMessageCustomizedColor("Subtotal does not meet min spend to use this voucher", "danger"))
-                    dispatch({ type: ActionTypes.PRICE_AFTER_APPLYING_VOUCHER, payload: {'totalPrice': subtotal, 'discount': 0 } })
+                    dispatch({ type: ActionTypes.PRICE_AFTER_APPLYING_VOUCHER, payload: {'initialPrice': subtotal, 'discount': 0 } })
                 }
                 else {
-                    dispatch({ type: ActionTypes.PRICE_AFTER_APPLYING_VOUCHER, payload: {'totalPrice': subtotal - ((subtotal * voucherInfo[0].max_discount) / 100), 'discount': ((subtotal * voucherInfo[0].max_discount) / 100)} })
+                    dispatch({ type: ActionTypes.PRICE_AFTER_APPLYING_VOUCHER, payload: {'initialPrice': subtotal - ((subtotal * voucherInfo[0].max_discount) / 100), 'discount': ((subtotal * voucherInfo[0].max_discount) / 100)} })
                     dispatch(singleMessageCustomizedColor("Voucher Code Applied", "success"))
                 }
             }
             else {
                 if (subtotal < voucherInfo[0].min_spend) {
                     dispatch(singleMessageCustomizedColor("Subtotal does not meet min spend to use this voucher", "danger"))
-                    dispatch({ type: ActionTypes.PRICE_AFTER_APPLYING_VOUCHER, payload: {'totalPrice': subtotal, 'discount': 0 } })
+                    dispatch({ type: ActionTypes.PRICE_AFTER_APPLYING_VOUCHER, payload: {'initialPrice': subtotal, 'discount': 0 } })
                 }
                 else {
-                    dispatch({ type: ActionTypes.PRICE_AFTER_APPLYING_VOUCHER, payload: {'totalPrice': subtotal - voucherInfo[0].max_discount, 'discount': voucherInfo[0].max_discount} })
+                    dispatch({ type: ActionTypes.PRICE_AFTER_APPLYING_VOUCHER, payload: {'initialPrice': subtotal - voucherInfo[0].max_discount, 'discount': voucherInfo[0].max_discount} })
                     dispatch(singleMessageCustomizedColor("Voucher Code Applied", "success"))
                 }
             }
