@@ -12,7 +12,7 @@ export default function AlertWithCustomizedColor() {
     const [isShow, setIsShow] = useState('none') // block if show
     
     useEffect(() => {
-        if (getInfoMessage) {
+        if (getInfoMessage !== '') {
             setIsShow('block')
             setTimeout(() => {
                 setIsShow('none')

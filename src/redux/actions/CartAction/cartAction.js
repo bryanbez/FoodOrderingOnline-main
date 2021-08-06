@@ -99,8 +99,13 @@ export const passTotalPriceToPay = (initialPrice, courierPrice) => {
     }
 }
 
-export const removeItemInCart = (cartId) => {
+export const removeItemInCart = (cartId, userId) => {
     return (dispatch) => {
-
+        return cartDB.doc(cartId).delete().then(msg => {
+            console.log("Item Deleted")
+            dispatch(fetchAllCartInfo(userId))
+        }).catch(err => {
+            console.log(err)
+        })
     }
 }

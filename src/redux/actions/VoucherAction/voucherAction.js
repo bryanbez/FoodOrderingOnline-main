@@ -2,14 +2,14 @@ import { voucherDB } from "../../../firebase";
 import { ActionTypes } from "../actionTypes";
 import { singleMessageCustomizedColor } from "../MessageOrErrorAction/infoAction";
 
-export const fetchVoucherCode = (code) => {
+export const fetchVoucherCode = (code, subtotal) => {
     return (dispatch) => {
         voucherDB.where("code", "==", code).get().then(docRef => {
             if (docRef.size === 1) {
-                return dispatch({ type: ActionTypes.FETCH_VOUCHER_CODE_INFO, payload: docRef.docs.map(doc => ({ id: doc.id, ...doc.data() })) })
+                dispatch({ type: ActionTypes.FETCH_VOUCHER_CODE_INFO, payload: docRef.docs.map(doc => ({ id: doc.id, ...doc.data() })) })
             }
             else {
-                return dispatch({ type: ActionTypes.FETCH_VOUCHER_CODE_INFO, payload: [] })
+                dispatch({ type: ActionTypes.FETCH_VOUCHER_CODE_INFO, payload: [] })
             }
         }).catch(err => {
             console.log(err)
@@ -18,7 +18,6 @@ export const fetchVoucherCode = (code) => {
 }
 
 export const priceAfterVoucherApplied = (subtotal, voucherInfo) => {
-    console.log(voucherInfo)
     return (dispatch) => {
         if (voucherInfo.length === 1) {
             if (voucherInfo[0].isFixedOrPercentage === 'percentage') {

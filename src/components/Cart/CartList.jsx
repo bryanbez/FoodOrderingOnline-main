@@ -47,64 +47,92 @@ export default function CartList() {
         )
     })
 
-    return (
-        <div className="container mb-4">
-            { displayOfItems }
-            <div className="row">
-                <div className="card">
-                <ul className="list-group list-group-flush">
-                    <li className="list-group-item">
+    const displayItemsAndCartCost = () => {
+
+        if (displayOfItems.length !== 0) {
+            return (
+                <div className="container mb-4">
+                { displayOfItems }
+                <div className="row">
+                    <div className="card">
+                    <ul className="list-group list-group-flush">
+                        <li className="list-group-item">
+                            <div className="row">
+                                <div className="col col-sm-6 col-lg-10">
+                                   <h3> SubTotal: </h3>
+                                </div>
+                                <div className="col col-sm-6 col-lg-2">
+                                   <h3> &#8369; {subTotal} </h3>
+                                </div>
+                            </div>
+                             
+                        </li>
+                        <li className="list-group-item">
                         <div className="row">
-                            <div className="col col-sm-6 col-lg-10">
-                               <h3> SubTotal: </h3>
+                                <div className="col col-sm-4 col-lg-3">
+                                   <h4> Voucher Code: </h4>
+                                </div>
+                                <div className="col col-sm-4 col-lg-7">
+                                    <VoucherInput subTotal={subTotal}></VoucherInput>
+                                    <br />
+                                    <AlertWithCustomizedColor></AlertWithCustomizedColor>
+                                </div>
+                                <div className="col col-sm-4 col-lg-2">
+                                   { discount === 0 ? '' : (<h4> - { discount } </h4>)}
+                                </div>
                             </div>
-                            <div className="col col-sm-6 col-lg-2">
-                               <h3> &#8369; {subTotal} </h3>
+                        </li>
+                        <li className="list-group-item">
+                        <div className="row">
+                                <div className="col col-sm-6 col-lg-3">
+                                   <h4> Shipping Fee: </h4>
+                                </div>
+                                <div className="col col-sm-6 col-lg-7">
+                                    <CourierDropdown></CourierDropdown>
+                                </div>
+                                <div className="col col-sm-6 col-lg-2">
+                                    { courierPrice === 0 ? '' : (<h4> + &#8369; { courierPrice } </h4>)}
+                                </div>
                             </div>
-                        </div>
-                         
-                    </li>
-                    <li className="list-group-item">
-                    <div className="row">
-                            <div className="col col-sm-4 col-lg-3">
-                               <h4> Voucher Code: </h4>
+                        </li>
+                        <li className="list-group-item">
+                        <div className="row">
+                                <div className="col col-sm-6 col-lg-9">
+                                   <h3> Total Price: </h3>
+                                </div>
+                                <div className="col col-sm-6 col-lg-3">
+                                   <h1> &#8369; {totalPrice} </h1>
+                                </div>
                             </div>
-                            <div className="col col-sm-4 col-lg-7">
-                                <VoucherInput subTotal={subTotal}></VoucherInput>
-                                <br />
-                                <AlertWithCustomizedColor></AlertWithCustomizedColor>
+                        </li>
+                        <li className="list-group-item">
+                        <div className="row">
+                                <div className="col col-sm-12 col-md-6 col-lg-10">
+                                   
+                                </div>
+                                <div className="col col-sm-12 col-md-6 col-lg-2">
+                                    { courierPrice !== 0 ? <button class="btn btn-primary"> Checkout </button> : ''}
+                                </div>
                             </div>
-                            <div className="col col-sm-4 col-lg-2">
-                               { discount === 0 ? '' : (<h4> - { discount } </h4>)}
-                            </div>
-                        </div>
-                    </li>
-                    <li className="list-group-item">
-                    <div className="row">
-                            <div className="col col-sm-6 col-lg-3">
-                               <h4> Shipping Fee: </h4>
-                            </div>
-                            <div className="col col-sm-6 col-lg-7">
-                                <CourierDropdown></CourierDropdown>
-                            </div>
-                            <div className="col col-sm-6 col-lg-2">
-                                { courierPrice === 0 ? '' : (<h4> + &#8369; { courierPrice } </h4>)}
-                            </div>
-                        </div>
-                    </li>
-                    <li className="list-group-item">
-                    <div className="row">
-                            <div className="col col-sm-6 col-lg-9">
-                               <h3> Total Price: </h3>
-                            </div>
-                            <div className="col col-sm-6 col-lg-3">
-                               <h1> &#8369; {totalPrice} </h1>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
+                        </li>
+                    </ul>
+                    </div>
                 </div>
-            </div>
-        </div>
+                </div>
+            )
+        }
+        else {
+            return (
+                <div className="container mb-4">
+                    <h2> You have no foods in cart </h2>
+                </div>
+            )
+        }
+    }
+
+    return (
+        <>
+            { displayItemsAndCartCost() }
+        </>
     )
 }

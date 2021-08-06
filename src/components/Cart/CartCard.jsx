@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import QuantityTextBox from './QuantityTextBox'
+import RemoveCartItem from './RemoveCartItem'
 
 export default function CartCard(params) {
 
@@ -33,6 +34,9 @@ export default function CartCard(params) {
                         </div>
                         <input type="text"
                             className="form-control" name="total_price" readOnly value={cartFoodInfo.totalPrice} aria-describedby="helpId" placeholder="Total Price" />
+                      </div>
+                      <div className="input-group">
+                          <RemoveCartItem itemId={cartFoodInfo.docId}></RemoveCartItem>
                       </div>
                      
                     </div>

@@ -11,13 +11,16 @@ export default function AlertInfo() {
     const [isShow, setIsShow] = useState('none') // block if show
     
     useEffect(() => {
-        if (getInfoMessage) {
+        if (getInfoMessage !== '') {
             setIsShow('block')
             setTimeout(() => {
                 setIsShow('none')
                 dispatch(clearInfoMsg())
             }, 3000);
         }
+        // return function cleanup() {
+        //     dispatch(clearInfoMsg())
+        // }
        
     }, [dispatch, getInfoMessage])
 
