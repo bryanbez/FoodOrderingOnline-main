@@ -5,6 +5,7 @@ import VoucherInput from '../Voucher/VoucherInput'
 import AlertWithCustomizedColor from '../Messages/AlertWithCustomizeColor'
 import CourierDropdown from '../Courier/CourierDropdown'
 import { passTotalPriceToPay } from '../../redux/actions/CartAction/cartAction'
+import { addCheckoutInfo } from '../../redux/actions/CheckoutAction/checkoutAction'
 
 export default function CartList() {
 
@@ -12,11 +13,13 @@ export default function CartList() {
 
     const allFoodsInCart = useSelector((state) => state.cart.user_all_items_in_cart)
 
+    const userId = useSelector((state) => state.profile.profileInfo['docId'])
+
     const subTotal = useSelector((state) => state.cart.sub_total)
 
     const discount = useSelector((state) => state.voucher.discountPrice)
 
-    const courierPrice = useSelector((state) => state.courier.selectedCourierPrice)
+    const courierPrice = parseFloat(useSelector((state) => state.courier.selectedCourierPrice))
 
     const afterVoucherAppliedPrice = useSelector((state) => state.voucher.priceAfterVoucherApplied)
 
@@ -46,6 +49,19 @@ export default function CartList() {
           
         )
     })
+
+    const checkoutFoodItems = () => {
+        const checkoutInfo = {
+            'subTotal': subTotal,
+            'discountPrice': discount === '' ? 0 : discount,
+            'courierPrice': courierPrice,
+            'totalPrice': totalPrice,
+            'foodItems': allFoodsInCart,
+            'userID': userId
+        }
+        dispatch(addCheckoutInfo(checkoutInfo))
+       
+    }
 
     const displayItemsAndCartCost = () => {
 
@@ -111,7 +127,7 @@ export default function CartList() {
                                    
                                 </div>
                                 <div className="col col-sm-12 col-md-6 col-lg-2">
-                                    { courierPrice !== 0 ? <button class="btn btn-primary"> Checkout </button> : ''}
+                                    { courierPrice !== 0 ? <button className="btn btn-primary" onClick={checkoutFoodItems}> Checkout </button> : ''}
                                 </div>
                             </div>
                         </li>
