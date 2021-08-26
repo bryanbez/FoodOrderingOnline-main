@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { refreshAuth, logOutUser } from '../redux/actions/AuthAction/authAction';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCartPlus, faListAlt, faHeart } from '@fortawesome/free-solid-svg-icons'
+import { faCartPlus, faListAlt, faHeart, faList } from '@fortawesome/free-solid-svg-icons'
 import { fetchAllCartInfo } from '../redux/actions/CartAction/cartAction';
 
 export default function Navbar() {
@@ -91,11 +91,17 @@ export default function Navbar() {
                         <span className="nav-link"> <FontAwesomeIcon icon={faHeart} /> Your Favorites </span>
                     </li>
                 </NavLink>
-                    <NavLink to="/cart" activeClassName="activeNavbar">
+                <NavLink to="/cart" activeClassName="activeNavbar">
                     <li className="nav-item">
                         <span className="nav-link position-relative"> <span hidden={getFoodsInCart === 0 ? true : false} className="position-absolute top-10 start-100 translate-middle badge rounded-pill bg-danger"> { getFoodsInCart }</span><FontAwesomeIcon icon={faCartPlus} /> Your Cart </span>
                     </li>
                 </NavLink>
+                <NavLink to="/checkout" activeClassName="activeNavbar">
+                <li className="nav-item">
+                        <span className="nav-link"> <FontAwesomeIcon icon={faList} /> Checkout </span>
+                    </li>
+                </NavLink>
+                
             </>
         )
     }

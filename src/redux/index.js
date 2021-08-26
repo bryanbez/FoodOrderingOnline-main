@@ -9,7 +9,7 @@ import favoriteReducer from './reducers/FavoriteReducers/favoriteReducer'
 import cartReducer from './reducers/CartReducers/cartReducer'
 import voucherReducer from './reducers/VoucherReducers/voucherReducer'
 import courierReducer from './reducers/CourierReducers/courierReducer'
-
+import checkoutReducer from './reducers/CheckoutReducers/CheckoutReducer'
 
 const rootReducers = combineReducers({
     foods: foodReducer,
@@ -21,7 +21,8 @@ const rootReducers = combineReducers({
     favorite: favoriteReducer,
     cart: cartReducer,
     voucher: voucherReducer,
-    courier: courierReducer
+    courier: courierReducer,
+    checkout: checkoutReducer
 })
 
 export default rootReducers
